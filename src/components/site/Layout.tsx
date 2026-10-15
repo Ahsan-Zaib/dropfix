@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 
 export function Logo({ light = false }: { light?: boolean }) {
   return (
-    <Link to="/" className="flex items-center gap-2.5" aria-label="Dropfix home">
+    <Link to="/" className="flex shrink-0 items-center gap-2.5" aria-label="Dropfix home">
       <img src={logo} alt="" width={36} height={36} className="size-9 object-contain" />
       <span className={cn("font-display text-xl font-bold tracking-tight", light ? "text-navy-foreground" : "text-navy")}>
         Drop<span className="text-primary">fix</span>
@@ -31,24 +31,24 @@ export function Header() {
     <header className={cn("sticky top-0 z-50 border-b bg-background/90 backdrop-blur-md transition-shadow", scrolled ? "shadow-soft border-border" : "border-transparent")}>
       <div className="container-x flex h-18 items-center justify-between gap-4 py-3">
         <Logo />
-        <nav className="hidden xl:flex items-center gap-1" aria-label="Main">
+        <nav className="hidden 2xl:flex items-center gap-1" aria-label="Main">
           {navLinks.map((l) => (
             <Link key={l.to} to={l.to} className="rounded-full px-3 py-2 text-sm font-medium text-muted-foreground hover:text-navy transition-colors" activeProps={{ className: "text-navy bg-muted" }} activeOptions={{ exact: l.to === "/" }}>
               {l.label}
             </Link>
           ))}
         </nav>
-        <div className="hidden md:flex items-center gap-2">
+        <div className="ml-auto hidden md:flex items-center gap-2">
           <Link to="/pricing" className={btn("outline", "sm")}>Get a Quote</Link>
           <Link to="/book" className={btn("primary", "sm")}>Book a Plumber</Link>
           <CallButton size="sm" label="Emergency? Call Now" />
         </div>
-        <button className="xl:hidden inline-flex size-11 items-center justify-center rounded-full border" onClick={() => setOpen(!open)} aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open}>
+        <button className="2xl:hidden inline-flex size-11 items-center justify-center rounded-full border" onClick={() => setOpen(!open)} aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open}>
           {open ? <X className="size-5" /> : <Menu className="size-5" />}
         </button>
       </div>
       {open && (
-        <div className="xl:hidden border-t bg-background animate-rise">
+        <div className="2xl:hidden border-t bg-background animate-rise">
           <nav className="container-x grid gap-1 py-4" aria-label="Mobile">
             {navLinks.map((l) => (
               <Link key={l.to} to={l.to} onClick={() => setOpen(false)} className="rounded-xl px-3 py-3 font-medium hover:bg-muted">

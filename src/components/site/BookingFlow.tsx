@@ -9,7 +9,8 @@ import { cn } from "@/lib/utils";
 
 const steps = ["Service", "Problem", "Property", "Date & time", "Your details", "Summary"];
 
-export type BookingSearch = { service?: string; urgency?: string; address?: string; notes?: string };
+export type BookingSearch = { service?: string | undefined; urgency?: string | undefined; address?: string | undefined; notes?: string | undefined };
+type Errs = Partial<Record<"service" | "description" | "property" | "address" | "postcode" | "date" | "time" | "name" | "phone" | "email", string>>;
 
 const detailsSchema = z.object({
   name: z.string().trim().min(2, "Please enter your full name").max(100),
@@ -19,7 +20,7 @@ const detailsSchema = z.object({
 
 export function BookingFlow({ initial }: { initial: BookingSearch }) {
   const [step, setStep] = useState(0);
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<Errs>({});
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState<string | null>(null);
   const [photo, setPhoto] = useState<string>("");
@@ -32,12 +33,12 @@ export function BookingFlow({ initial }: { initial: BookingSearch }) {
   const set = (k: keyof typeof d) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setD({ ...d, [k]: e.target.value });
 
   const validate = (s: number) => {
-    const e: Record<string, string> = {};
+    const e: Errs = {};
     if (s === 0 && !d.service) e.service = "Please choose a service";
     if (s === 1 && d.description.trim().length < 5) e.description = "Please describe the problem in a few words";
     if (s === 2) { if (!d.property) e.property = "Please choose a property type"; if (!d.address.trim()) e.address = "Please enter the service address"; if (!d.postcode.trim()) e.postcode = "Please enter a postcode"; }
     if (s === 3) { if (!d.date) e.date = "Please choose a preferred date"; else if (new Date(d.date) < new Date(new Date().toDateString())) e.date = "Please choose a future date"; if (!d.time) e.time = "Please choose a preferred time"; }
-    if (s === 4) { const r = detailsSchema.safeParse(d); if (!r.success) r.error.issues.forEach((i) => (e[String(i.path[0])] = i.message)); }
+    if (s === 4) { const r = detailsSchema.safeParse(d); if (!r.success) r.error.issues.forEach((i) => (e[String(i.path[0]) as keyof Errs] = i.message)); }
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -163,6 +164,6 @@ export function BookingFlow({ initial }: { initial: BookingSearch }) {
 function L({ label, children, full }: { label: string; children: React.ReactNode; full?: boolean }) {
   return <label className={cn("grid gap-1.5 text-sm font-semibold text-navy", full && "sm:col-span-2")}>{label}{children}</label>;
 }
-function Err({ m }: { m?: string }) {
+function Err({ m }: { m?: string | undefined }) {
   return m ? <span role="alert" className="text-xs font-medium text-destructive sm:col-span-2">{m}</span> : null;
 }

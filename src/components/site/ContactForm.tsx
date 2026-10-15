@@ -13,16 +13,16 @@ const schema = z.object({
   message: z.string().trim().min(5, "Please add a short message").max(1500),
 });
 
-export function ContactForm({ service, message }: { service?: string; message?: string }) {
+export function ContactForm({ service, message }: { service?: string | undefined; message?: string | undefined }) {
   const [v, setV] = useState({ name: "", phone: "", email: "", service: service && quoteServiceOptions.includes(service) ? service : "", address: "", message: message ?? "" });
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<Partial<Record<string, string>>>({});
   const [state, setState] = useState<"idle" | "sending" | "done">("idle");
   const set = (k: keyof typeof v) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setV({ ...v, [k]: e.target.value });
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     const r = schema.safeParse(v);
-    if (!r.success) { const m: Record<string, string> = {}; r.error.issues.forEach((i) => (m[String(i.path[0])] = i.message)); setErrors(m); return; }
+    if (!r.success) { const m: Partial<Record<string, string>> = {}; r.error.issues.forEach((i) => (m[String(i.path[0])] = i.message)); setErrors(m); return; }
     setErrors({});
     setState("sending");
     await new Promise((res) => setTimeout(res, 600));
@@ -57,13 +57,13 @@ export function ContactForm({ service, message }: { service?: string; message?: 
       <label className="grid gap-1.5 text-xs font-bold uppercase tracking-widest text-navy">
         Service required
         <select className="field normal-case tracking-normal font-normal" value={v.service} onChange={set("service")}><option value="">Select a service</option>{quoteServiceOptions.map((o) => <option key={o}>{o}</option>)}</select>
-        {errors.service && <span role="alert" className="normal-case tracking-normal font-medium text-destructive">{errors.service}</span>}
+        {errors["service"] && <span role="alert" className="normal-case tracking-normal font-medium text-destructive">{errors["service"]}</span>}
       </label>
       <div className="sm:col-span-2">{F({ k: "address", label: "Address / Postcode" })}</div>
       <label className="grid gap-1.5 text-xs font-bold uppercase tracking-widest text-navy sm:col-span-2">
         Message
         <textarea className="field min-h-32 normal-case tracking-normal font-normal" value={v.message} onChange={set("message")} />
-        {errors.message && <span role="alert" className="normal-case tracking-normal font-medium text-destructive">{errors.message}</span>}
+        {errors["message"] && <span role="alert" className="normal-case tracking-normal font-medium text-destructive">{errors["message"]}</span>}
       </label>
       <button type="submit" disabled={state === "sending"} className={btn("primary", "lg", "sm:col-span-2 tracking-widest")}>{state === "sending" ? "SENDING…" : "SEND REQUEST"}</button>
     </form>

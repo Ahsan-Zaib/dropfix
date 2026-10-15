@@ -9,7 +9,7 @@ export function BeforeAfter() {
   const [pos, setPos] = useState(50);
   const ref = useRef<HTMLDivElement>(null);
   const dragging = useRef(false);
-  const p = projects[idx];
+  const p = projects[idx]!;
 
   const move = useCallback((clientX: number) => {
     const r = ref.current?.getBoundingClientRect();

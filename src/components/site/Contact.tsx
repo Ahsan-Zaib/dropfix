@@ -15,7 +15,7 @@ export function CallButton({ size = "md", label = "Call Now", variant = "emergen
       </Link>
     );
   return (
-    <a href={href} className={cls}>
+    <a href={href} target="_blank" rel="noopener noreferrer" className={cls}>
       <Phone className="size-4" /> {label}
     </a>
   );

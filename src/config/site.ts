@@ -13,10 +13,11 @@ export const business = {
   tagline: "Reliable Plumbing. Done Right.",
   supportingTagline: "Every Drop Matters. Every Fix Counts.",
   /** International format, digits only, e.g. "447700900123". null = not supplied. */
-  phoneE164: null as string | null,
-  phoneDisplay: null as string | null,
+  // DEMO TEST NUMBERS — replace with the real business numbers.
+  phoneE164: "447700900123" as string | null,
+  phoneDisplay: "+44 7700 900123 (demo)" as string | null,
   /** WhatsApp number: country code + digits only. null = not supplied. */
-  whatsappNumber: null as string | null,
+  whatsappNumber: "447700900123" as string | null,
   email: null as string | null,
   address: null as string | null,
   /** Google Maps embed query (address or place name). null hides the map. */

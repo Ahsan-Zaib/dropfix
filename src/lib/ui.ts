@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 
 const base =
-  "inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none whitespace-nowrap";
+  "btn-fx inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-all duration-300 active:scale-[.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none whitespace-nowrap";
 
 const variants = {
   primary: "bg-primary text-primary-foreground hover:brightness-110 shadow-soft",

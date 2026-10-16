@@ -14,6 +14,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Header, Footer, WhatsAppFloat } from "@/components/site/Layout";
 import { business } from "@/config/site";
+import { AutoReveal, ScrollProgress, PageTransition } from "@/components/site/Motion";
 
 function NotFoundComponent() {
   return (
@@ -135,10 +136,12 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground">Skip to content</a>
+      <ScrollProgress />
       <Header />
       <main id="main">
-        <Outlet />
+        <PageTransition><Outlet /></PageTransition>
       </main>
+      <AutoReveal />
       <Footer />
       <WhatsAppFloat />
     </QueryClientProvider>

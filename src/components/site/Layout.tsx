@@ -117,15 +117,26 @@ export function WhatsAppFloat() {
 
 export function PageHeader({ eyebrow, title, intro, children }: { eyebrow?: string; title: string; intro?: string; children?: ReactNode }) {
   return (
-    <section className="relative overflow-hidden bg-navy text-navy-foreground">
-      <div className="absolute -right-24 -top-24 size-96 rounded-full bg-primary/20 blur-3xl" aria-hidden />
-      <div className="container-x relative py-16 md:py-24 animate-rise">
-        {eyebrow && <p className="eyebrow mb-3">{eyebrow}</p>}
-        <h1 className="max-w-3xl text-4xl font-bold md:text-5xl">{title}</h1>
-        {intro && <p className="mt-4 max-w-2xl text-lg text-navy-foreground/75">{intro}</p>}
-        {children && <div className="mt-8 flex flex-wrap gap-3">{children}</div>}
+    <section className="no-reveal relative overflow-hidden bg-navy text-navy-foreground">
+      <div className="absolute inset-0 bg-grid" aria-hidden />
+      <div className="absolute -right-24 -top-24 size-96 rounded-full bg-primary/30 blur-3xl animate-float" aria-hidden />
+      <div className="absolute -bottom-32 left-1/4 size-80 rounded-full bg-emergency/20 blur-3xl animate-float-slow" aria-hidden />
+      <div className="container-x relative pt-16 pb-24 md:pt-24 md:pb-32">
+        {eyebrow && <p className="eyebrow mb-3 animate-rise">{eyebrow}</p>}
+        <h1 className="max-w-3xl text-4xl font-extrabold md:text-6xl animate-rise [animation-delay:.08s]">{title}</h1>
+        {intro && <p className="mt-5 max-w-2xl text-lg text-navy-foreground/75 animate-rise [animation-delay:.16s]">{intro}</p>}
+        {children && <div className="mt-8 flex flex-wrap gap-3 animate-rise [animation-delay:.24s]">{children}</div>}
       </div>
+      <Wave />
     </section>
+  );
+}
+
+export function Wave() {
+  return (
+    <svg className="absolute inset-x-0 bottom-0 h-12 w-full text-background md:h-16" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden>
+      <path fill="currentColor" d="M0,48 C240,88 480,8 720,32 C960,56 1200,80 1440,40 L1440,80 L0,80 Z" />
+    </svg>
   );
 }
 

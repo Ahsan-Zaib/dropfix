@@ -9,7 +9,7 @@ export function AutoReveal() {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const els = Array.from(
       document.querySelectorAll<HTMLElement>("main section > div > *, main .card-lift, main [data-reveal]"),
-    ).filter((el) => !el.closest(".no-reveal") && !el.dataset.revealed);
+    ).filter((el) => !el.closest(".no-reveal") && !el.dataset['revealed']);
     if (reduce) return;
     const io = new IntersectionObserver(
       (entries) => {
@@ -26,7 +26,7 @@ export function AutoReveal() {
     els.forEach((el, i) => {
       const r = el.getBoundingClientRect();
       if (r.top < window.innerHeight * 0.9) return; // already visible — leave alone
-      el.dataset.revealed = "1";
+      el.dataset['revealed'] = "1";
       el.classList.add("reveal");
       el.style.transitionDelay = `${(i % 3) * 80}ms`;
       io.observe(el);

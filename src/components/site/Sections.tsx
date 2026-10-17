@@ -67,7 +67,7 @@ export function EmergencySection() {
 export function ServiceCard({ s }: { s: Service }) {
   return (
     <article className="group relative flex flex-col overflow-hidden rounded-3xl border bg-card shadow-soft card-lift transition-colors duration-300 hover:border-primary/50">
-      <Link to="/services/$slug" params={{ slug: s.slug }} className="absolute inset-0 z-0 rounded-3xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" aria-label={`${s.title} — view details`}>
+      <Link to="/services/$slug" params={{ slug: s.slug }} className="absolute inset-0 z-[1] rounded-3xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" aria-label={`${s.title} — view details`}>
         <span className="sr-only">{s.title}</span>
       </Link>
       <div className="aspect-[3/2] overflow-hidden">

@@ -66,20 +66,25 @@ export function EmergencySection() {
 
 export function ServiceCard({ s }: { s: Service }) {
   return (
-    <article className="group flex flex-col overflow-hidden rounded-3xl border bg-card shadow-soft card-lift">
+    <article className="group relative flex flex-col overflow-hidden rounded-3xl border bg-card shadow-soft card-lift transition-colors duration-300 hover:border-primary/50">
+      <Link to="/services/$slug" params={{ slug: s.slug }} className="absolute inset-0 z-0 rounded-3xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" aria-label={`${s.title} — view details`}>
+        <span className="sr-only">{s.title}</span>
+      </Link>
       <div className="aspect-[3/2] overflow-hidden">
-        <img src={serviceImage[s.slug]} alt={s.title} loading="lazy" width={960} height={640} className="size-full object-cover transition-transform duration-500 group-hover:scale-105" />
+        <img src={serviceImage[s.slug]} alt={s.title} loading="lazy" width={960} height={640} className="size-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
       </div>
       <div className="flex flex-1 flex-col p-6">
         <div className="mb-2 flex items-start justify-between gap-3">
-          <h3 className="text-lg font-semibold text-navy">{s.title}</h3>
+          <h3 className="flex items-center gap-1.5 text-lg font-semibold text-navy transition-colors group-hover:text-primary">
+            {s.title}
+            <ArrowRight className="size-4 -translate-x-1 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
+          </h3>
           <span className="shrink-0 rounded-full bg-accent px-2.5 py-1 text-xs font-semibold text-accent-foreground">
             {s.from !== null && pricing.enabled && !pricing.demo ? `From ${pricing.currency}${s.from}` : "Request a Quote"}
           </span>
         </div>
         <p className="flex-1 text-sm text-muted-foreground">{s.short}</p>
-        <div className="mt-5 flex flex-wrap gap-2">
-          <Link to="/services/$slug" params={{ slug: s.slug }} className={btn("outline", "sm")}>Learn More <ArrowRight className="size-3.5" /></Link>
+        <div className="relative z-10 mt-5 flex flex-wrap gap-2">
           <Link to="/book" search={{ service: s.quoteKey }} className={btn("primary", "sm")}>Book Now</Link>
           <WhatsAppButton kind="quote" size="sm" label="Enquire" extra={`Service: ${s.title}.`} />
         </div>

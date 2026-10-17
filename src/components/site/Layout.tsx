@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Menu, X, MessageCircle, Mail, Phone, MapPin, Clock } from "lucide-react";
 import logo from "@/assets/logo-mark.png";
 import { btn } from "@/lib/ui";
@@ -8,9 +8,30 @@ import { CallButton } from "./Contact";
 import { cn } from "@/lib/utils";
 
 export function Logo({ light = false }: { light?: boolean }) {
+  const [dripping, setDripping] = useState(false);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
   return (
-    <Link to="/" className="flex shrink-0 items-center gap-2.5" aria-label="Dropfix home">
-      <img src={logo} alt="" width={36} height={36} className="size-9 object-contain" />
+    <Link
+      to="/"
+      className="relative flex shrink-0 select-none items-center gap-2.5"
+      aria-label="Dropfix home"
+      onClick={() => {
+        setDripping(false);
+        requestAnimationFrame(() => setDripping(true));
+        if (timer.current) clearTimeout(timer.current);
+        timer.current = setTimeout(() => setDripping(false), 1100);
+      }}
+    >
+      <span className="relative">
+        <img src={logo} alt="" width={36} height={36} className="size-9 object-contain" />
+        {dripping && (
+          <span aria-hidden className="pointer-events-none absolute left-1/2 top-6 -ml-[5px]">
+            <span className="absolute inset-0 block size-2.5 rounded-full border-2 border-primary/60 animate-drop-splash" />
+            <span className="block size-2.5 bg-primary animate-drop-drip" style={{ clipPath: "path('M5 0 C 7.5 3.2 10 5.2 10 7.4 A 5 5 0 1 1 0 7.4 C 0 5.2 2.5 3.2 5 0 Z')" }} />
+          </span>
+        )}
+      </span>
       <span className={cn("font-display text-xl font-bold tracking-tight", light ? "text-navy-foreground" : "text-navy")}>
         Drop<span className="text-primary">fix</span>
       </span>

@@ -18,6 +18,8 @@ export function AutoReveal() {
             const el = e.target as HTMLElement;
             el.classList.add("is-visible");
             io.unobserve(el);
+            // drop effect classes once finished so hover effects work normally
+            if (el.dataset['fx']) setTimeout(() => el.classList.remove("reveal-img", "reveal-write", "reveal-type", "is-visible"), 2200);
           }
         });
       },
@@ -30,6 +32,21 @@ export function AutoReveal() {
       el.classList.add("reveal");
       el.style.transitionDelay = `${(i % 3) * 80}ms`;
       io.observe(el);
+    });
+    // "Being written" headings + paragraphs, and wiping image reveals
+    const fx: Array<[string, string]> = [
+      ["main section h2, main section h3", "reveal-write"],
+      ["main section p", "reveal-type"],
+      ["main section img", "reveal-img"],
+    ];
+    fx.forEach(([sel, cls]) => {
+      document.querySelectorAll<HTMLElement>(sel).forEach((el) => {
+        if (el.closest(".no-reveal") || el.dataset['fx']) return;
+        if (el.getBoundingClientRect().top < window.innerHeight * 0.9) return;
+        el.dataset['fx'] = "1";
+        el.classList.add(cls);
+        io.observe(el);
+      });
     });
     return () => io.disconnect();
   }, [pathname]);

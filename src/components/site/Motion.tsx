@@ -18,6 +18,8 @@ export function AutoReveal() {
             const el = e.target as HTMLElement;
             el.classList.add("is-visible");
             io.unobserve(el);
+            // drop effect classes once finished so hover effects work normally
+            if (el.dataset['fx']) setTimeout(() => el.classList.remove("reveal-img", "reveal-write", "reveal-type", "is-visible"), 2200);
           }
         });
       },

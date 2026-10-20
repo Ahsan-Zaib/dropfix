@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { img } from "@/lib/images";
 import { btn } from "@/lib/ui";
 import { seo } from "@/lib/seo";
@@ -16,10 +18,16 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const heroRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "-8%"]);
   return (
     <>
-      <section className="no-reveal relative isolate overflow-hidden bg-navy text-navy-foreground">
-        <img src={img.hero} alt="Dropfix plumber repairing pipework under a kitchen sink" width={1920} height={1088} className="absolute inset-0 -z-10 size-full object-cover object-right scale-105 animate-[page-in_1.4s_ease_both]" />
+      <section ref={heroRef} className="no-reveal relative isolate overflow-hidden bg-navy text-navy-foreground">
+        <motion.div style={{ y: heroY }} className="absolute -inset-y-16 inset-x-0 -z-10 will-change-transform">
+          <img src={img.hero} alt="Dropfix plumber repairing pipework under a kitchen sink" width={1920} height={1088} className="size-full object-cover object-right scale-105 animate-[page-in_1.4s_ease_both]" />
+        </motion.div>
         <div className="absolute inset-0 -z-10 bg-hero-overlay" aria-hidden />
         <div className="absolute inset-0 -z-10 bg-grid" aria-hidden />
         <div className="absolute -left-32 top-10 -z-10 size-[28rem] rounded-full bg-primary/25 blur-3xl animate-float" aria-hidden />

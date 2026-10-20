@@ -31,7 +31,7 @@ function Index() {
         <div className="absolute inset-0 -z-10 bg-hero-overlay" aria-hidden />
         <div className="absolute inset-0 -z-10 bg-grid" aria-hidden />
         <div className="absolute -left-32 top-10 -z-10 size-[28rem] rounded-full bg-primary/25 blur-3xl animate-float" aria-hidden />
-        <div className="container-x relative pt-20 pb-28 md:pt-32 md:pb-40">
+        <motion.div style={{ y: contentY }} className="container-x relative pt-20 pb-28 md:pt-32 md:pb-40">
           <div className="max-w-2xl">
             <p className="eyebrow mb-4 inline-flex items-center gap-2 rounded-full glass px-3 py-1.5 animate-rise">
               <span className="relative flex size-2"><span className="absolute inset-0 rounded-full bg-primary animate-ripple" /><span className="relative size-2 rounded-full bg-primary" /></span>
@@ -51,7 +51,7 @@ function Index() {
             <div className="glass ml-12 rounded-2xl px-5 py-4 animate-bob [animation-delay:1.5s]"><p className="text-2xl font-bold">Upfront</p><p className="text-sm text-navy-foreground/70">guide pricing</p></div>
           </div>
           <div className="mt-14 md:mt-20 animate-rise [animation-delay:.45s]"><TrustStrip /></div>
-        </div>
+        </motion.div>
         <Wave />
       </section>
 

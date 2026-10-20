@@ -20,7 +20,9 @@ export const Route = createFileRoute("/about")({
       <PageHeader eyebrow="About us" title="Good Plumbing Starts With Trust." intro="Every Drop Matters. Every Fix Counts." />
       <section className="section-y">
         <div className="container-x grid gap-12 lg:grid-cols-2 lg:items-center">
-          <img src={img.kitchen} alt="Dropfix plumber connecting kitchen appliance pipework" width={960} height={640} loading="lazy" className="rounded-3xl object-cover shadow-lift" />
+          <div className="photo-frame aspect-[3/2] shadow-lift">
+            <img src={img.kitchen} alt="Dropfix plumber connecting kitchen appliance pipework" width={960} height={640} loading="lazy" className="size-full object-cover" />
+          </div>
           <div className="grid gap-8">
             {blocks.map(([t, d]) => <div key={t}><h2 className="text-xl font-bold text-navy">{t}</h2><p className="mt-2 text-muted-foreground">{d}</p></div>)}
           </div>

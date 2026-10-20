@@ -70,7 +70,7 @@ export function ServiceCard({ s }: { s: Service }) {
       <Link to="/services/$slug" params={{ slug: s.slug }} className="absolute inset-0 z-[1] rounded-3xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" aria-label={`${s.title} — view details`}>
         <span className="sr-only">{s.title}</span>
       </Link>
-      <div className="aspect-[3/2] overflow-hidden">
+      <div className="photo-frame m-3 mb-0 aspect-[3/2]">
         <img src={serviceImage[s.slug]} alt={s.title} loading="lazy" width={960} height={640} className="size-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
       </div>
       <div className="flex flex-1 flex-col p-6">

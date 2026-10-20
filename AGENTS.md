@@ -10,3 +10,4 @@
 <!-- LOVABLE:END -->
 
 - All business details, services, prices, plans, reviews and FAQs live in src/config/site.ts; null values mean "not supplied" and the UI hides/softens features — keeps the site honest and editable in one place.
+- Photo blocks use the shared photo-frame class; scroll reveals target the frame rather than its images so comparison layers stay aligned.

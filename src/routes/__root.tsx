@@ -14,7 +14,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Header, Footer, WhatsAppFloat } from "@/components/site/Layout";
 import { business } from "@/config/site";
-import { AutoReveal, ScrollProgress, PageTransition } from "@/components/site/Motion";
+import { AutoReveal, ScrollProgress, PageTransition, HoverTilt } from "@/components/site/Motion";
 
 function NotFoundComponent() {
   return (
@@ -142,6 +142,7 @@ function RootComponent() {
         <PageTransition><Outlet /></PageTransition>
       </main>
       <AutoReveal />
+      <HoverTilt />
       <Footer />
       <WhatsAppFloat />
     </QueryClientProvider>

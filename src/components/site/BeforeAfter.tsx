@@ -9,7 +9,7 @@ export function BeforeAfter() {
   const [pos, setPos] = useState(50);
   const ref = useRef<HTMLDivElement>(null);
   const dragging = useRef(false);
-  const p = projects[idx]!;
+  const p = projects[idx] ?? projects[0];
 
   const move = useCallback((clientX: number) => {
     const r = ref.current?.getBoundingClientRect();
@@ -19,12 +19,14 @@ export function BeforeAfter() {
 
   const go = (d: number) => { setIdx((i) => (i + d + projects.length) % projects.length); setPos(50); };
 
+  if (!p) return null;
+
   return (
     <div className="grid gap-8 lg:grid-cols-[1.6fr_1fr]">
       <div>
         <div
           ref={ref}
-          className="relative aspect-[16/10] select-none overflow-hidden rounded-3xl shadow-lift touch-none cursor-ew-resize"
+          className="photo-frame relative aspect-[16/10] select-none shadow-lift touch-none cursor-ew-resize"
           onPointerDown={(e) => { dragging.current = true; (e.target as HTMLElement).setPointerCapture?.(e.pointerId); move(e.clientX); }}
           onPointerMove={(e) => dragging.current && move(e.clientX)}
           onPointerUp={() => (dragging.current = false)}
@@ -34,9 +36,9 @@ export function BeforeAfter() {
           <div className="absolute inset-0 transition-[clip-path] duration-75" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}>
             <img src={p.before} alt={`Before: ${p.category}`} className="absolute inset-0 size-full object-cover" draggable={false} />
           </div>
-          <span className="absolute left-4 top-4 rounded-full bg-navy/80 px-3 py-1 text-xs font-bold tracking-widest text-navy-foreground">BEFORE</span>
-          <span className="absolute right-4 top-4 rounded-full bg-primary px-3 py-1 text-xs font-bold tracking-widest text-primary-foreground">AFTER</span>
-          <div className="absolute inset-y-0 w-0.5 bg-background" style={{ left: `${pos}%` }}>
+          <span className="absolute left-6 top-6 z-[3] rounded-full bg-navy/80 px-3 py-1 text-xs font-bold tracking-widest text-navy-foreground">BEFORE</span>
+          <span className="absolute right-6 top-6 z-[3] rounded-full bg-primary px-3 py-1 text-xs font-bold tracking-widest text-primary-foreground">AFTER</span>
+          <div className="absolute inset-y-0 z-[3] w-0.5 bg-background" style={{ left: `${pos}%` }}>
             <div
               role="slider" tabIndex={0} aria-label="Compare before and after" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(pos)}
               onKeyDown={(e) => { if (e.key === "ArrowLeft") setPos((v) => Math.max(0, v - 5)); if (e.key === "ArrowRight") setPos((v) => Math.min(100, v + 5)); }}

@@ -37,7 +37,7 @@ export function AutoReveal() {
     const fx: Array<[string, string]> = [
       ["main section h2, main section h3", "reveal-write"],
       ["main section p", "reveal-type"],
-      ["main section img", "reveal-img"],
+      ["main section .photo-frame, main section img:not(.photo-frame img)", "reveal-img"],
     ];
     fx.forEach(([sel, cls]) => {
       document.querySelectorAll<HTMLElement>(sel).forEach((el) => {

@@ -31,7 +31,9 @@ function ServicePage() {
         <div className="container-x grid gap-12 lg:grid-cols-[1.3fr_1fr]">
           <div className="space-y-10">
             {s.note && <p className="flex gap-2 rounded-2xl bg-emergency/10 p-4 text-sm text-navy"><AlertCircle className="size-5 shrink-0 text-emergency" />{s.note}</p>}
-            <img src={serviceImage[s.slug]} alt={s.title} width={960} height={640} className="aspect-[3/2] w-full rounded-3xl object-cover shadow-soft" />
+            <div className="photo-frame aspect-[3/2]">
+              <img src={serviceImage[s.slug]} alt={s.title} width={960} height={640} className="size-full object-cover" />
+            </div>
             <Block title="Common problems" items={s.problems} icon="dot" />
             <Block title="Work included" items={s.included} icon="check" />
             <Block title="Optional extras" items={s.extras} icon="plus" />
